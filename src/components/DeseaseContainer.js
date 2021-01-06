@@ -17,6 +17,7 @@ const DeseaseContainer = () => {
 
     return (
         <>
+        <Link to={{pathname:'/new-desease/'}}>New desease</Link>
         <div className="flex">
             {deseases.map(desease => {
             return (
@@ -30,8 +31,9 @@ const DeseaseContainer = () => {
                 </Link>
             )}
             )}
-            d c
+            
         </div>
+
         </>
     );
 };

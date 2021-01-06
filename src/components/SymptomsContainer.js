@@ -17,6 +17,7 @@ const SymptomsContainer = () => {
 
     return (
         <>
+        <Link to={{pathname:'/new-symptom/'}}>New symptome</Link>
         <div className="flex">
             {symptoms.map(symptom => {
             return (

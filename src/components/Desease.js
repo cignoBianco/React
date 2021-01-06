@@ -38,7 +38,7 @@ const Desease = (props) => {
             {desease.title}
             desease
         </div>
-        <div>
+        <div> {symptoms.length > 0 ? "Symptoms: " : ""}
             {symptoms.map(symptom => {
                 return (
                     <Link to={{pathname:'/symptoms/' + symptom.id}} key={symptom.id}>
