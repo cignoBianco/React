@@ -1,2 +1,2 @@
 # React
-React frontend 42EVX
+React frontend 42EVX.
