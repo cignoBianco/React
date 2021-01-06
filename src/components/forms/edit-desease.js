@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
 import axios from 'axios'
+import {
+    Form,
+    Button, 
+    Container
+} from 'react-bootstrap'
 
 const EditDesease = (props) => {
-  //const [stateLocal, setState] = useState({ title: props.location.state.post.post.title,
-    //                                        description: props.location.state.post.post.description
-      //                                    })
 
     let params = props.match.params;
-    const [desease, setDesease] = useState([]);
 
+    const [desease, setDesease] = useState([]);
     const [localTitle, setLocalTitle] = useState('');
     const [localDescription, setLocalDescription] = useState('');
 
@@ -24,58 +25,66 @@ const EditDesease = (props) => {
         )
     }, [])
 
-
     const handleTitleChange = (event) => {
         setLocalTitle( event.target.value )
-      }
+    }
 
-      const handleDescriptionChange = (event) => {
+    const handleDescriptionChange = (event) => {
         setLocalDescription( event.target.value )
-      }
+    }
 
+    const handleSubmit = (event) => {
+        event.preventDefault()
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
+        const title = event.target.title.value
+        const description = event.target.description.value
+        const data = {
+            title: title,
+            description: description
+        }
 
-    const title = event.target.title.value
-    const description = event.target.description.value
-
-    const data = {title: title,
-                  description: description
-                 }
-    axios.put("/deseases/"+desease.id, data, {headers: {
-        'Content-Type': 'application/json',
-
-      }})
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
-      .then(setTimeout(() =>  props.history.push("/deseases"), 700 ))
-  }
-
+        axios.put("/deseases/"+desease.id, data, {headers: {
+            'Content-Type': 'application/json',
+        }})
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+        .then(setTimeout(() =>  props.history.push("/deseases"), 700 ))
+    }
 
     return(
-        <div>
-          <form onSubmit={handleSubmit}>
-            title
-            <input
-              id='title'
-              type="text"
-              value={localTitle}
-              onChange={handleTitleChange}
-            />
-            <br />
-            description
-            <input
-              id='description'
-              type="text"
-              value={localDescription}
-              onChange={handleDescriptionChange}
-              />
-          <br />
-          <button type="submit"> Submit </button>
-          </form>
-          <br />
-        </div>
+        <Container>
+            <div class="mt-5 w-50 text-justify">
+                <h1 class="mb-4">Update Desease</h1>
+                <Form  onSubmit={handleSubmit}>
+
+                <Form.Group controlId="title">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control type="text" placeholder="Enter title" id="title"
+                        value={localTitle}
+                        onChange={handleTitleChange} />
+                </Form.Group>
+
+                <Form.Group controlId="description">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control type="text" placeholder="Description" id="description"
+                        value={localDescription}
+                        onChange={handleDescriptionChange} />
+                </Form.Group>
+
+                <Form.Group controlId="body_part">
+                    <Form.Label>Body Part</Form.Label>
+                    <Form.Control type="text" placeholder="Body part" id="body_type" />
+                    <Form.Text className="text-muted">
+                        Head, heart, arms, legs...
+                    </Form.Text>
+                </Form.Group>
+
+                <Button variant="primary" size="lg" type="submit" block>
+                    Submit
+                </Button>
+                </Form>
+            </div>
+        </Container>
     )}
 
 export default EditDesease
