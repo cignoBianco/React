@@ -52,7 +52,8 @@ const Desease = (props) => {
                 )}
             )}
         </div>
-        <p onClick={deleteId}>delete</p>
+        <Link to={{pathname:'/edit-desease/' + desease.id}}>Edit</Link>
+        <button onClick={deleteId}>delete</button>
         </>
     );
 };

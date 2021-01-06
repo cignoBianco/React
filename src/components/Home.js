@@ -30,16 +30,17 @@ const Home = () => {
   return (
     <>
       <div className="flex">
+          <h1>Home</h1>
+
+            
+
         <input
             type="text"
             placeholder="Search"
             value={searchTerm}
             onChange={handleChange}
         />
-        <ul>
-           
-        </ul>
-        home
+       
       </div>
 
        
