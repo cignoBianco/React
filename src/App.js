@@ -1,11 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { Fragment } from 'react';
 import {
   BrowserRouter,
   Route,
-  Switch,
-  Link
+  Switch
 } from 'react-router-dom';
 import Home from './components/Home'
 import NotFound from './components/NotFound'
@@ -16,28 +14,14 @@ import EditDesease from './components/forms/edit-desease'
 import CreateNewSymptom from './components/forms/symptoms.form'
 import SymptomsContainer from './components/SymptomsContainer'
 import Symptom from './components/Symptom'
-
-
+import Navigation from './components/layout/Navigation'
 
 function App() {
   return (
     <div className="App">
-      
       <Fragment>
       <BrowserRouter>
-      <ul>
-                <li>
-                    <Link to={{pathname:'/'}}>
-                        Home
-                    </Link>
-                    <Link to={{pathname:'/deseases/'}}>
-                        Deseases
-                    </Link>
-                    <Link to={{pathname:'/symptoms/'}}>
-                        Symptoms
-                    </Link>
-                </li>
-            </ul>
+        <Navigation />
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/deseases' component={DeseaseContainer} />

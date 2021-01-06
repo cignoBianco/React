@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import { Card, Button } from 'react-bootstrap'
 
 const Desease = (props) => {
 
@@ -19,7 +20,6 @@ const Desease = (props) => {
         axios.get('/desease-symptoms/'+params.id)
         .then(
             response => {
-                console.log(response)
                 setSymptoms(response.data)
             }
         )
@@ -32,28 +32,43 @@ const Desease = (props) => {
           .then(setTimeout(() =>  props.history.push("/deseases"), 700 ))
     }
 
-    return (
-        <>
-        <div className="flex">
-            {desease.title}
-            desease
-        </div>
-        <div> {symptoms.length > 0 ? "Symptoms: " : ""}
+    return (<>
+        <Card>
+            <Card.Header>{desease.title}</Card.Header>
+            <Card.Body>
+                <Card.Title>{desease.body_type}</Card.Title>
+                <Card.Text>
+                    {desease.description}
+                </Card.Text>
+                <Link to={{pathname:'/edit-desease/' + desease.id}}>
+                    <Button variant="dark">
+                        Edit
+                    </Button>
+                </Link>
+                <Button variant="secondary" onClick={deleteId}>
+                    Delete
+                </Button>
+            </Card.Body>
+            <Card> 
+            {symptoms.length > 0 ? "Symptoms: " : ""}
             {symptoms.map(symptom => {
                 return (
+                    <>
                     <Link to={{pathname:'/symptoms/' + symptom.id}} key={symptom.id}>
-                    
-                    <p>
-                        {symptom.title} 
-                        {symptom.description} 
-                    </p>
-                    
+                        <Card.Title>
+                            {symptom.title} 
+                        </Card.Title>
                     </Link>
+                    <Card.Text>
+                        {symptom.description}
+                    </Card.Text> 
+                    </>
                 )}
             )}
-        </div>
-        <Link to={{pathname:'/edit-desease/' + desease.id}}>Edit</Link>
-        <button onClick={deleteId}>delete</button>
+        </Card>
+            <Card.Footer className="text-muted">{desease.created_at}</Card.Footer>
+        </Card>
+        
         </>
     );
 };

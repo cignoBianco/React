@@ -11,7 +11,7 @@ const EditDesease = (props) => {
     const [desease, setDesease] = useState([]);
 
     const [localTitle, setLocalTitle] = useState('');
-    const [localDescription, setLocalDescription] = useState('');  
+    const [localDescription, setLocalDescription] = useState('');
 
     useEffect(() => {
         axios.get('/deseases/'+params.id)
@@ -28,11 +28,11 @@ const EditDesease = (props) => {
     const handleTitleChange = (event) => {
         setLocalTitle( event.target.value )
       }
-    
+
       const handleDescriptionChange = (event) => {
         setLocalDescription( event.target.value )
       }
-    
+
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -45,7 +45,7 @@ const EditDesease = (props) => {
                  }
     axios.put("/deseases/"+desease.id, data, {headers: {
         'Content-Type': 'application/json',
-        
+
       }})
       .then(res => console.log(res))
       .catch(err => console.log(err))
