@@ -6,15 +6,27 @@ import {Card, CardDeck, Button} from 'react-bootstrap'
 const DeseaseContainer = () => {
 
     const [deseases, setDeseases] = useState([]);
+    const [result, setResult] = useState([]);
     useEffect(() => {
         axios.get('/deseases')
         .then(
             response => {
                 console.log(response)
                 setDeseases(response.data)
+                setResult(response.data)
             }
         )
     }, [])
+
+    const sortIt = (type) => {  
+        if (type === "ALL") setResult(deseases)
+        else
+        setResult(
+            deseases.filter(t => 
+                t.body_part && t.body_part.toLowerCase().includes(type.toLocaleLowerCase())
+            )
+        )
+    }
 
     return (<><br/>
         <Link to={{pathname:'/new-desease/'}}>
@@ -23,9 +35,12 @@ const DeseaseContainer = () => {
             </Button>
         </Link>
         <br/><br/>
+        <span onClick={() => sortIt("HEAD")}>head </span> 
+        <span onClick={() => sortIt("ARM")}>arm </span> 
+        <span onClick={() => sortIt("ALL")}>all </span>
         
         <CardDeck>
-        {deseases.map(desease => {
+        {result.map(desease => {
         return (
         <Card  class="card mb-3" style={{minWidth: "18rem", marginBottom: "1rem"}}>
             <Card.Body>

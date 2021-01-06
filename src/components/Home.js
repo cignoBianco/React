@@ -41,9 +41,7 @@ const Home = () => {
         return (
             <Link to={{pathname:'/deseases/' + desease.id}}>
                 <p>
-                    {desease.title} 
-                    {desease.description} 
-                    {desease.body_part}
+                    {desease.title}
                 </p>
             </Link>
         )}

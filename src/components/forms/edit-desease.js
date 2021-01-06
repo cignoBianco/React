@@ -13,6 +13,7 @@ const EditDesease = (props) => {
     const [desease, setDesease] = useState([]);
     const [localTitle, setLocalTitle] = useState('');
     const [localDescription, setLocalDescription] = useState('');
+    const [localBodyPart, setLocalBodyPart] = useState('');
 
     useEffect(() => {
         axios.get('/deseases/'+params.id)
@@ -21,6 +22,7 @@ const EditDesease = (props) => {
                 setDesease(response.data)
                 setLocalTitle(response.data.title)
                 setLocalDescription(response.data.description)
+                setLocalBodyPart(response.data.body_part)
             }
         )
     }, [])
@@ -33,14 +35,20 @@ const EditDesease = (props) => {
         setLocalDescription( event.target.value )
     }
 
+    const handleBodyPartChange = (event) => {
+        setLocalBodyPart( event.target.value )
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault()
 
         const title = event.target.title.value
         const description = event.target.description.value
+        const body_part = event.target.body_part.value
         const data = {
             title: title,
-            description: description
+            description: description,
+            body_part: body_part
         }
 
         axios.put("/deseases/"+desease.id, data, {headers: {
@@ -73,7 +81,8 @@ const EditDesease = (props) => {
 
                 <Form.Group controlId="body_part">
                     <Form.Label>Body Part</Form.Label>
-                    <Form.Control type="text" placeholder="Body part" id="body_type" />
+                    <Form.Control type="text" placeholder="Body part" id="body_part" 
+                        onChange={handleBodyPartChange} />
                     <Form.Text className="text-muted">
                         Head, heart, arms, legs...
                     </Form.Text>
