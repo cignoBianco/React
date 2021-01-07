@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import {Card, CardDeck, Button} from 'react-bootstrap'
+import TimeAgo from './helpers/TimeAgo'
 
 const DeseaseContainer = () => {
 
@@ -41,8 +42,9 @@ const DeseaseContainer = () => {
         
         <CardDeck>
         {result.map(desease => {
+        let timeAgo = TimeAgo(desease.updated_at);
         return (
-        <Card  class="card mb-3" style={{minWidth: "18rem", marginBottom: "1rem"}}>
+        <Card  className="card mb-3" style={{minWidth: "18rem", marginBottom: "1rem"}}>
             <Card.Body>
                 <Link to={{pathname:'/deseases/' + desease.id}}>
                     <Card.Title>{desease.title}</Card.Title>
@@ -53,7 +55,7 @@ const DeseaseContainer = () => {
             </Card.Text>
             </Card.Body>
             <Card.Footer>
-            <small className="text-muted">Last updated {desease.updated_at} mins ago</small>
+            <small className="text-muted">Last updated {timeAgo}</small>
             </Card.Footer>
         </Card>
         )}

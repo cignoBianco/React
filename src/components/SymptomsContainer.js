@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import {Card, CardDeck, Button} from 'react-bootstrap'
+import TimeAgo from './helpers/TimeAgo'
 
 const SymptomsContainer = () => {
 
@@ -27,6 +28,7 @@ const SymptomsContainer = () => {
 
         <CardDeck>
             {symptoms.map(symptom => {
+            let timeAgo = TimeAgo(symptom.updated_at);
             return (
                 <Card  class="card mb-3" style={{minWidth: "18rem", marginBottom: "1rem"}}>
                     <Card.Body>
@@ -38,7 +40,7 @@ const SymptomsContainer = () => {
                         </Card.Text>
                     </Card.Body>
                     <Card.Footer>
-                        <small className="text-muted">Last updated {symptom.updated_at} mins ago</small>
+                        <small className="text-muted">Last updated {timeAgo}</small>
                     </Card.Footer>
                 </Card>
                 )}
