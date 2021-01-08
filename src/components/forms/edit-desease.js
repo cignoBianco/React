@@ -11,6 +11,7 @@ const EditDesease = (props) => {
     let params = props.match.params;
 
     const [desease, setDesease] = useState([]);
+    const [symptoms, setSymptoms] = useState([]);
     const [localTitle, setLocalTitle] = useState('');
     const [localDescription, setLocalDescription] = useState('');
     const [localBodyPart, setLocalBodyPart] = useState('');
@@ -23,6 +24,13 @@ const EditDesease = (props) => {
                 setLocalTitle(response.data.title)
                 setLocalDescription(response.data.description)
                 setLocalBodyPart(response.data.body_part)
+            }
+        )
+
+        axios.get('/symptoms/')
+        .then(
+            response => {
+                setSymptoms(response.data)
             }
         )
     }, [])
@@ -42,13 +50,21 @@ const EditDesease = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault()
 
+        let arrayChecked = []
+        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+        for (var i = 0; i < checkboxes.length; i++) {
+            arrayChecked.push(checkboxes[i].id)
+        }
+       
         const title = event.target.title.value
         const description = event.target.description.value
         const body_part = event.target.body_part.value
         const data = {
             title: title,
             description: description,
-            body_part: body_part
+            body_part: body_part,
+            id: desease.id,
+            symptoms_id: arrayChecked
         }
 
         axios.put("/deseases/"+desease.id, data, {headers: {
@@ -61,8 +77,9 @@ const EditDesease = (props) => {
 
     return(
         <Container>
-            <div class="mt-5 w-50 text-justify">
-                <h1 class="mb-4">Update Desease</h1>
+            <div className="mt-5 w-50 text-justify">
+                <h1 className="mb-4">Update Desease</h1>
+
                 <Form  onSubmit={handleSubmit}>
 
                 <Form.Group controlId="title">
@@ -87,6 +104,16 @@ const EditDesease = (props) => {
                         Head, heart, arms, legs...
                     </Form.Text>
                 </Form.Group>
+
+                <h2>Symptoms:</h2>
+                {symptoms.map(symptom => 
+                {return(
+                <div>
+                    {symptom.id}
+                    <input type="checkbox" id={symptom.id} name={symptom.title}/>
+                    <label for={symptom.title}>{symptom.title}</label>
+                </div>
+                )})}
 
                 <Button variant="primary" size="lg" type="submit" block>
                     Submit

@@ -53,7 +53,7 @@ const Desease = (props) => {
             {symptoms.length > 0 ? "Symptoms: " : ""}
             {symptoms.map(symptom => {
                 return (
-                    <>
+                    <div  key={symptom.id}>
                     <Link to={{pathname:'/symptoms/' + symptom.id}} key={symptom.id}>
                         <Card.Title>
                             {symptom.title} 
@@ -62,7 +62,7 @@ const Desease = (props) => {
                     <Card.Text>
                         {symptom.description}
                     </Card.Text> 
-                    </>
+                    </div>
                 )}
             )}
         </Card>
