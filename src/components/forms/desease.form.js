@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import axios from 'axios'
 import {
     Form,
@@ -8,11 +8,31 @@ import {
 
 const CreateNewDesease = (props) => {
 
+    const [symptoms, setSymptoms] = useState([]);
+
+    useEffect(() => {
+        axios.get('/symptoms/')
+        .then(
+            response => {
+                setSymptoms(response.data)
+            }
+        )
+    }, [])
+
     const handleSubmit = (event) => {
         event.preventDefault()
-        const data = {title: event.target.title.value,
+
+        let arrayChecked = []
+        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+        for (var i = 0; i < checkboxes.length; i++) {
+            arrayChecked.push(checkboxes[i].id)
+        }
+
+        const data = {
+            title: event.target.title.value,
             description: event.target.description.value,
             body_type: event.target.body_type.value,
+            symptoms_id: arrayChecked
         }
             
         axios.post('/deseases', data, {headers: {
@@ -43,6 +63,14 @@ const CreateNewDesease = (props) => {
                         Head, heart, arms, legs...
                     </Form.Text>
                 </Form.Group>
+                {symptoms.map(symptom => 
+                {return(
+                <div>
+                    {symptom.id}
+                    <input type="checkbox" id={symptom.id} name={symptom.title}/>
+                    <label for={symptom.title}>{symptom.title}</label>
+                </div>
+                )})}
                 <Button variant="primary" size="lg" type="submit" block>
                     Submit
                 </Button>
