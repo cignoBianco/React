@@ -66,7 +66,6 @@ const CreateNewDesease = (props) => {
                 {symptoms.map(symptom => 
                 {return(
                 <div>
-                    {symptom.id}
                     <input type="checkbox" id={symptom.id} name={symptom.title}/>
                     <label for={symptom.title}>{symptom.title}</label>
                 </div>
