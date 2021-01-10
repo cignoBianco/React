@@ -99,6 +99,7 @@ const EditDesease = (props) => {
                 <Form.Group controlId="body_part">
                     <Form.Label>Body Part</Form.Label>
                     <Form.Control type="text" placeholder="Body part" id="body_part" 
+                        value={localBodyPart}
                         onChange={handleBodyPartChange} />
                     <Form.Text className="text-muted">
                         Head, heart, arms, legs...
